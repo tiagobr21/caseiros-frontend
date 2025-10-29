@@ -1,0 +1,13 @@
+    .magnifying {
+        position: absolute;
+        margin-top: 10px;
+        right: 140px;
+    }
+
+@media (max-width: 768px) {
+    .magnifying{
+        position: absolute;
+        margin-top:10px;
+        right: 25px;
+    }
+}
