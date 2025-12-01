@@ -11,8 +11,6 @@ export default function Header() {
   const carrinho = context?.carrinho ?? [];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  console.log(isMenuOpen);
-  
 
   const closeMobileMenu = () => {
     setIsMenuOpen(false);

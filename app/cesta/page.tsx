@@ -12,12 +12,11 @@ export default function MonteSuaCesta() {
   const [termoBusca, setTermoBusca] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const { adicionarItem } = useCarrinho();
+  const [imagemSelecionada, setImagemSelecionada] = useState<string | null>(null);
 
   useEffect(() => {
      api.get("/products").then((res) => setProdutos(res.data));
   }, []);
-
-  console.log(produtos);
   
 
   const produtosFiltrados = produtos.filter((p) =>
@@ -73,18 +72,39 @@ export default function MonteSuaCesta() {
             {/* Pequeno ajuste: usei 'mx-auto' (tailwind) para centralizar a imagem */}
        
             <img
-              src={p.image}
+              src={`http://localhost:4000/products/image/${p.id}`}
               alt={p.name}
               width={200}
               height={200}
               className="rounded-xl mb-3 mx-auto"
+              onClick={()=> setImagemSelecionada(`http://localhost:4000/products/image/${p.id}`)}
             />
+
+            {imagemSelecionada && (
+              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm z-50">
+                  <div className="relative p-4 max-w-[90%] max-h-[90%]">
+
+                    <button
+                      onClick={() => setImagemSelecionada(null)}
+                      className="absolute -top-4 -right-4 bg-red-600 text-white rounded-full w-10 h-10 text-2xl flex items-center justify-center shadow-lg hover:bg-red-700"
+                    >
+                      ×
+                    </button>
+
+                    <img
+                      src={imagemSelecionada}
+                      alt="Imagem ampliada"
+                      className="rounded-xl max-h-[85vh] mx-auto shadow-2xl"
+                    />
+                  </div>
+                </div>
+            )
+            }
+
             <h3 className="font-semibold text-green-800">{p.name}</h3>
             <p className="text-sm text-gray-600">{p.description}</p>
             <p className="font-bold text-green-700 mt-2">
-              R$ {p.price}
-       
-              
+              R$ {p.price}    
             </p>
             <button
               onClick={() => adicionarItem(p)}
