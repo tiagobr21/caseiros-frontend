@@ -72,12 +72,12 @@ export default function MonteSuaCesta() {
             {/* Pequeno ajuste: usei 'mx-auto' (tailwind) para centralizar a imagem */}
        
             <img
-              src={`http://localhost:4000/products/image/${p.id}`}
+              src={`${process.env.NEXT_PUBLIC_URL_BACK}/products/image/${p.id}`}
               alt={p.name}
               width={200}
               height={200}
               className="rounded-xl mb-3 mx-auto"
-              onClick={()=> setImagemSelecionada(`http://localhost:4000/products/image/${p.id}`)}
+              onClick={()=> setImagemSelecionada(`${process.env.NEXT_PUBLIC_URL_BACK}/products/image/${p.id}`)}
             />
 
             {imagemSelecionada && (

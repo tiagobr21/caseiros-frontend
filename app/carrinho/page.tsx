@@ -94,6 +94,7 @@ export default function CarrinhoPage() {
 
   useEffect(() => {
     fetchDeliveryZones();
+   
   }, []);
 
   useEffect(() => {
@@ -142,7 +143,7 @@ export default function CarrinhoPage() {
         
         await api.post("/orders",orderBody);
 
-        alertService.sucess("Pedido realizado com Sucesso !!!");
+        alertService.success("Pedido realizado com Sucesso !!!");
 
     }    
      
@@ -156,13 +157,14 @@ export default function CarrinhoPage() {
       >
         Seu Carrinho <FiShoppingCart size={20} style={{ marginLeft: 5 }} />
       </h2>
-
+    
 
       {carrinho.length === 0 ? (
         <p className="text-gray-600">Você ainda não adicionou itens à sua cesta.</p>
       ) : (
         <>
-          {/* Lista de Itens */}
+            {/* Lista de Itens */}
+  
           <ul className="space-y-4">
             {carrinho.map((item) => (
               <li

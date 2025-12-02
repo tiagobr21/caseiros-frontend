@@ -12,7 +12,7 @@ class AlertService {
         this.listeners.forEach((fn)=> fn(message, type));
     }
 
-    sucess(msg: string){
+    success(msg: string){
         this.notify(msg,"success");
     }
 
