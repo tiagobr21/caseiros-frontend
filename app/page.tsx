@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <section className="text-center py-5 bg-green-50">
+    <section className="text-center py-5 bg-green-50 mb-15">
       <div className="max-w-4xl mx-auto">
         <Image
           src="/logo.jpg"

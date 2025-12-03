@@ -1,13 +1,8 @@
 "use client";
 import { createContext, useContext, useState } from "react";
+import { CarrinhoItem } from "@/app/interfaces/CarrinhoItem";
 
-export interface CarrinhoItem {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  [key: string]: any; // caso seu produto tenha mais campos
-}
+
 
 interface CarrinhoContextType {
   carrinho: CarrinhoItem[];

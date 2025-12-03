@@ -1,25 +1,13 @@
 "use client";
 import { useCarrinho } from "@/context/CarrinhoContext";
-import { CarrinhoItem } from "@/context/CarrinhoContext";
 import { FiShoppingCart } from "react-icons/fi";
 import "./style.css";
 import { useEffect, useState } from "react";
 import { api } from "@/services/api";
 import { alertService } from "@/services/alert";
 import Alert from "../alert/alert";
-
-
-
-interface deliverZones {
-  id: number;
-  neighborhood: string;
-  price: number;
-}
-
-interface calculateCart {
-  items: any[];
-  bairro: string;
-}
+import { DeliverZones } from "../interfaces/DeliverZones";
+import { CalculateCart } from "../interfaces/CalculateCart";
 
 export default function CarrinhoPage() {
   const { carrinho, removerItem } = useCarrinho();
@@ -28,7 +16,7 @@ export default function CarrinhoPage() {
     0
   );
 
-  const [deliveryZones, setdeliveryZones] = useState<deliverZones[]>([]);
+  const [deliveryZones, setdeliveryZones] = useState<DeliverZones[]>([]);
   const [bairroSelecionado, setBairroSelecionado] = useState<string>("");
   const [frete, setFrete] = useState<number>(0);
   const [totalFinal, setTotalFinal] = useState<number>(subtotal);
@@ -74,7 +62,7 @@ export default function CarrinhoPage() {
       return c;
     });
 
-    const payload: calculateCart = {
+    const payload: CalculateCart = {
       items: newCarrinho,
       bairro: delivery_zone,
     };

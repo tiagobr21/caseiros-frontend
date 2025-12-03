@@ -10,13 +10,14 @@ export default function Header() {
   const context = useCarrinho();
   const carrinho = context?.carrinho ?? [];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+ 
 
   const closeMobileMenu = () => {
     setIsMenuOpen(false);
   };
 
   return (
+    <>
 
     <header className="bg-white shadow-sm sticky top-0 z-50 relative">
       <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
@@ -88,6 +89,8 @@ export default function Header() {
           </Link>
         </nav>
       )}
-    </header>
+        </header>
+  
+    </>
   );
 }

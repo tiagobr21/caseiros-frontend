@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import Header from "@/components/header/page";
 import Footer from "@/components/Footer";
 import { CarrinhoProvider } from "@/context/CarrinhoContext";
+import ClientVisibility from "@/components/ClientVisibility";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
@@ -13,14 +14,12 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
-   
-      <body className={`${roboto.className} bg-gray-50 text-gray-800 flex flex-col min-h-screen`}>
+    <html lang="pt-br">
+      <body className={roboto.className}>
         <CarrinhoProvider>
-          <Header />
-
-          <main className="flex-grow">{children}</main>
-          <Footer />
+          <ClientVisibility>
+            {children}
+          </ClientVisibility>
         </CarrinhoProvider>
       </body>
     </html>

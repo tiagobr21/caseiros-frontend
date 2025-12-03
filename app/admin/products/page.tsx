@@ -1,5 +1,5 @@
 "use client";
-
+import "./page.css"
 import { useEffect, useState } from "react";
 import CreateProductModal from "./models/CreateProductModal";
 import EditProductModal from "./models/EditProductModal";
@@ -43,7 +43,7 @@ export default function AdminProducts() {
     
 
   return (
-    <div className="p-6">
+    <div className="p-0">
       <h1 className="text-2xl font-bold text-green-800 mb-6">Gerenciar Produtos</h1>
        
           <Alert/>
@@ -55,7 +55,7 @@ export default function AdminProducts() {
         <IoIosAddCircle size={24} />
       </button>
 
-      <div className="bg-white shadow rounded-xl p-6">
+      <div className="bg-white shadow rounded-xl p-2 overflow-x-auto p-4">
         <table className="w-full">
           <thead>
             <tr className="border-b">
@@ -79,7 +79,7 @@ export default function AdminProducts() {
                     onClick={() => viewImage(p.id)} // << NOVO !!
                     className="text-green-600"
                 >
-                    <CiImageOn size={24} />
+                    <CiImageOn className="icon" size={24} />
                         </button></td>
                 : <td className="py-2"><CiImageOff size={24} /></td>      
                
@@ -89,14 +89,14 @@ export default function AdminProducts() {
                     onClick={() => setOpenEdit(p)}
                     className="text-blue-600 mr-3"
                   >
-                   <MdEdit size={24} />
+                   <MdEdit className="icon" size={24} />
                   </button>
 
                   <button
                     onClick={() => setOpenDelete(p)}
                     className="text-red-600"
-                  >
-                  <FaTrash size={20} />
+                  > 
+                  <FaTrash className="icon" size={20} />
                   </button>
                 </td>
               </tr>
