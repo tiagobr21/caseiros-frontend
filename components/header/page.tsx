@@ -3,15 +3,34 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCarrinho } from "@/context/CarrinhoContext";
 import "./style.css";
-import { useState } from "react";
-import { FiMenu, FiX, FiShoppingCart, FiInbox} from "react-icons/fi";
+import { use, useEffect, useState } from "react";
+import { FiMenu, FiX, FiShoppingCart, FiInbox } from "react-icons/fi";
+import { MdAdminPanelSettings } from "react-icons/md";
+import { api } from "@/services/api";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const context = useCarrinho();
   const carrinho = context?.carrinho ?? [];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
- 
+  const router = useRouter();
+  const [permissionAdmin, setPermissionAdmin] = useState(true);
+  
+    const verifyAuth = async () => { 
+      let token = localStorage.getItem("token");
+    
+      const res = await api.get(`${process.env.NEXT_PUBLIC_URL_BACK}/auth/validate-token/${token}`);
+  
+      if (res.data.statusCode === 401) { 
+          setPermissionAdmin(false);
+      }
+      
+  }
 
+  useEffect(() => { 
+    verifyAuth();
+  })
+   
   const closeMobileMenu = () => {
     setIsMenuOpen(false);
   };
@@ -39,7 +58,15 @@ export default function Header() {
                 {carrinho.length}
               </span>
             )}
-          </Link>
+            </Link>
+            {permissionAdmin &&
+           <Link href="/admin" style={{display:'flex'}} className="text-green-800 hover:text-green-600">
+            Admin <MdAdminPanelSettings size={24} style={{marginLeft:5}} />
+              </Link>
+            }
+
+
+            
         </nav>
  
         <div className="md:hidden">

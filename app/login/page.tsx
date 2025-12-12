@@ -3,12 +3,12 @@
 import { api } from "@/services/api";
 import { useState } from "react";
 import { UserInterface } from "../interfaces/UserInterface";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const login = async () => {
 
@@ -25,7 +25,7 @@ export default function LoginPage() {
 
     if (res.status == 201) {
       localStorage.setItem("token", data.token);
-      navigate("/admin");
+       router.push("/admin");;
     }
   };
 

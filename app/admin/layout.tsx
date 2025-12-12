@@ -3,13 +3,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Alert from "../alert/alert";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {  FiX } from "react-icons/fi"; // ÍCONES DO REACT-ICONS
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import { api } from "@/services/api";
+import { useRouter } from "next/navigation";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [openMenu, setOpenMenu] = useState(false);
+  const router = useRouter();
 
   const menu = [
     { name: "Dashboard", href: "/admin" },
@@ -17,6 +20,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Pedidos", href: "/admin/orders" },
     { name: "Usuários", href: "/admin/users" },
   ];
+
+  const verifyAuth = async () => { 
+    let token = localStorage.getItem("token");
+  
+    const res = await api.get(`${process.env.NEXT_PUBLIC_URL_BACK}/auth/validate-token/${token}`);
+
+    if (res.data.statusCode === 401) { 
+        router.push("/login");
+        return false;
+    }
+    
+  }
+
+  useEffect(() => {
+    
+    verifyAuth();
+
+  })
 
   return (
     <div className="flex min-h-screen bg-gray-100">
