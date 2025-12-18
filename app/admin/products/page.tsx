@@ -21,7 +21,7 @@ export default function AdminProducts() {
     
 
   const loadProducts = async () => {
-    const res = await api.get("/products");
+    const res = await api.get(`${process.env.NEXT_PUBLIC_URL_BACK}/products`);
     setProducts(res.data);
   };
 

@@ -19,12 +19,12 @@ export default function EditProductModal({ product, onClose, onSuccess }: any) {
       const img = new FormData();
       img.append("file", image);
 
-       await api.post(`/products/upload_image/${form.id}` , img, {
+       await api.post(`${process.env.NEXT_PUBLIC_URL_BACK}/products/upload_image/${form.id}` , img, {
         headers: { "Content-Type": "multipart/form-data" },
       });
     }
 
-    await api.put(`/products/${product.id}`, {
+    await api.put(`${process.env.NEXT_PUBLIC_URL_BACK}/products/${product.id}`, {
       ...form,
       price: Number(form.price),
     });

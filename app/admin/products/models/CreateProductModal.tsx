@@ -16,7 +16,7 @@ export default function CreateProductModal({ onClose, onSuccess }: any) {
 
   const handleSubmit = async () => {
      
-    const products = await api.post("/products", {
+    const products = await api.post(`${process.env.NEXT_PUBLIC_URL_BACK}/products`, {
       ...form,
       price: Number(form.price),
     });
@@ -31,7 +31,7 @@ export default function CreateProductModal({ onClose, onSuccess }: any) {
       const imgData = new FormData();
       imgData.append("file", image);
 
-       const upload = await api.post(`/products/upload_image/${products.data.id}`, imgData, {
+       const upload = await api.post(`${process.env.NEXT_PUBLIC_URL_BACK}/products/upload_image/${products.data.id}`, imgData, {
         headers: { "Content-Type": "multipart/form-data" },
        });
 

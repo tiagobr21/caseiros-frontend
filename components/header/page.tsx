@@ -8,13 +8,15 @@ import { FiMenu, FiX, FiShoppingCart, FiInbox } from "react-icons/fi";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { api } from "@/services/api";
 import { useRouter } from "next/navigation";
+import { IoIosLogIn } from "react-icons/io";
+import { CiLogout } from "react-icons/ci";
 
 export default function Header() {
   const context = useCarrinho();
   const carrinho = context?.carrinho ?? [];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
-  const [permissionAdmin, setPermissionAdmin] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(true);
   
     const verifyAuth = async () => { 
       let token = localStorage.getItem("token");
@@ -22,7 +24,7 @@ export default function Header() {
       const res = await api.get(`${process.env.NEXT_PUBLIC_URL_BACK}/auth/validate-token/${token}`);
   
       if (res.data.statusCode === 401) { 
-          setPermissionAdmin(false);
+          setLoggedIn(false);
       }
       
   }
@@ -35,11 +37,20 @@ export default function Header() {
     setIsMenuOpen(false);
   };
 
+  const logOut = () => {
+    localStorage.removeItem("token");
+    router.push("/");
+  }
+
+  const logIn = () => { 
+    router.push("/login");
+  }
+
   return (
     <>
 
     <header className="bg-white shadow-sm sticky top-0 z-50 relative">
-      <div className="max-w-6xl mx-auto flex items-center justify-between p-4">
+      <div className="max-w-10xl mx-auto flex items-center justify-between p-4">
 
         <Link href="/" className="flex items-center gap-2" onClick={closeMobileMenu}>
           <Image src="/logo.jpg" alt="Caseiros" width={50} height={50} />
@@ -59,17 +70,30 @@ export default function Header() {
               </span>
             )}
             </Link>
-            {permissionAdmin &&
+            {loggedIn &&
            <Link href="/admin" style={{display:'flex'}} className="text-green-800 hover:text-green-600">
             Admin <MdAdminPanelSettings size={24} style={{marginLeft:5}} />
               </Link>
             }
+              
+            {loggedIn ? 
+              
+       
+              <CiLogout size={24} style={{marginLeft:5}} onClick={()=> logOut()}  className="text-green-800 hover:text-green-600"/>
+     
+              
+              :
 
-
+              <IoIosLogIn size={24} style={{marginLeft:5}}  onClick={()=> logIn()} className="text-green-800 hover:text-green-600"  />
+  
+          }
+         
             
         </nav>
+        
  
-        <div className="md:hidden">
+          <div className="md:hidden">
+            
 
              {carrinho.length > 0 && !isMenuOpen && (
               <span className="relative left-3 top-0.5 bg-green-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
@@ -88,7 +112,9 @@ export default function Header() {
         </div>
       
 
-      </div>
+        </div>
+        
+        
 
 
       {isMenuOpen && (

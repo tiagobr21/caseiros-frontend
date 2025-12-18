@@ -15,7 +15,7 @@ export default function MonteSuaCesta() {
   const [imagemSelecionada, setImagemSelecionada] = useState<string | null>(null);
 
   useEffect(() => {
-     api.get("/products").then((res) => setProdutos(res.data));
+     api.get(`${process.env.NEXT_PUBLIC_URL_BACK}/products`).then((res) => setProdutos(res.data));
   }, []);
   
 

@@ -45,7 +45,7 @@ export default function CarrinhoPage() {
   }
 
   const fetchDeliveryZones = async () => {
-    const response = await api.get(`delivery/zones`);
+    const response = await api.get(`${process.env.NEXT_PUBLIC_URL_BACK}/delivery/zones`);
     setdeliveryZones(response.data);
   };
 
@@ -68,7 +68,7 @@ export default function CarrinhoPage() {
     };
     
 
-    const response = await api.post(`cart/calculate`, payload);
+    const response = await api.post(`${process.env.NEXT_PUBLIC_URL_BACK}/cart/calculate`, payload);
     
 
     // Se o backend enviar o total já calculado, você usa:
@@ -128,8 +128,8 @@ export default function CarrinhoPage() {
             delivery_price: Number(frete),
             items: items
         }
-        
-        await api.post("/orders",orderBody);
+
+        await api.post(`${process.env.NEXT_PUBLIC_URL_BACK}/orders`, orderBody);
 
         alertService.success("Pedido realizado com Sucesso !!!");
 

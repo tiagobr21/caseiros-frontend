@@ -18,7 +18,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Dashboard", href: "/admin" },
     { name: "Produtos", href: "/admin/products" },
     { name: "Pedidos", href: "/admin/orders" },
+    { name: "Bairros (Frete)", href: "/admin/locations" },
     { name: "Usuários", href: "/admin/users" },
+    
   ];
 
   const verifyAuth = async () => { 

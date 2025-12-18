@@ -1,14 +1,20 @@
 "use client";
 
 import { api } from "@/services/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserInterface } from "../interfaces/UserInterface";
 import { useRouter } from "next/navigation";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+  window.scrollTo(0, 0);
+}, []);
+
 
   const login = async () => {
 
@@ -31,10 +37,15 @@ export default function LoginPage() {
 
 
   return (
-    <div className="bg-white shadow-xl rounded-xl p-8 w-full max-w-md mx-auto mt-60">
+    <>
+   
+      <FaArrowLeft size={24} className="m-4 cursor-pointer" onClick={() => router.push("/")} />  
+
+    <div className="bg-white shadow-xl rounded-xl p-8 w-full h-full max-w-md mx-auto mt-40">
       <h1 className="text-2xl font-bold text-center text-green-700 mb-6">
         Login
       </h1>
+
 
       <input
         className="border p-3 rounded w-full mb-4"
@@ -57,6 +68,7 @@ export default function LoginPage() {
       >
         Entrar
       </button>
-    </div>
+      </div>
+      </>
   );
 }

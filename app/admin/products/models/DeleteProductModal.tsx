@@ -5,7 +5,7 @@ import { api } from "@/services/api";
 export default function DeleteProductModal({ product, onClose, onSuccess }: any) {
 
   const confirmDelete = async () => {
-    await api.delete(`/products/${product.id}`);
+    await api.delete(`${process.env.NEXT_PUBLIC_URL_BACK}/products/${product.id}`);
     onSuccess();
     onClose();
   };
