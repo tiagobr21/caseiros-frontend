@@ -46,7 +46,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       {/* ===== BOTÃO HAMBÚRGUER - MOBILE ===== */}
       <button
-        className="lg:hidden fixed top-25 left-4 z-50 bg-white p-2 rounded shadow"
+        className="lg:hidden fixed top-25 left-10 z-50 bg-white p-2 rounded shadow"
         onClick={() => setOpenMenu(true)}
       >
         <HiOutlineMenuAlt2 size={24} />

@@ -49,7 +49,7 @@ export default function Header() {
   return (
     <>
 
-    <header className="bg-white shadow-sm sticky top-0 z-50 relative">
+    <header className="bg-white shadow-sm sticky top-0 z-100 relative">
       <div className="max-w-10xl mx-auto flex items-center justify-between p-4">
 
         <Link href="/" className="flex items-center gap-2" onClick={closeMobileMenu}>
@@ -139,7 +139,25 @@ export default function Header() {
                 {carrinho.length}
               </span>
             )}
-          </Link>
+            </Link>
+            
+             {loggedIn &&
+           <Link href="/admin" className=" flex text-green-800 hover:text-green-600">
+                Admin <MdAdminPanelSettings size={24} style={{ marginLeft: 5 }} />
+                
+              <div className="flex justify-between w-full">
+               <CiLogout size={24}  onClick={()=> logOut()}  className="ml-auto text-green-800 hover:text-green-600"/>
+              </div>
+              </Link>
+            }
+
+                
+            {!loggedIn &&
+            
+              <div className="flex">
+                <IoIosLogIn size={24} style={{marginLeft:5}}  onClick={()=> logIn()} className="ml-auto text-green-800 hover:text-green-600"  />
+              </div>
+          }
         </nav>
       )}
         </header>
