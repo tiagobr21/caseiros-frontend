@@ -8,6 +8,8 @@ import "./page.css"
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 7; 
 
   const loadOrders = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_URL_BACK}/orders`);
@@ -18,6 +20,17 @@ export default function AdminOrders() {
   useEffect(() => {
     loadOrders();
   }, []);
+
+  
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+    const currentOrders = orders.slice(
+      indexOfFirstItem,
+      indexOfLastItem
+    );
+
+    const totalPages = Math.ceil(orders.length / itemsPerPage);
 
   return (
     <div className="p-0">
@@ -36,7 +49,7 @@ export default function AdminOrders() {
           </thead>
 
           <tbody>
-            {orders.map((o: any) => (
+            {currentOrders.map((o: any) => (
               <tr key={o.id} className="border-b">
                 <td className="py-2">{o.id}</td>
                 <td className="py-2">{o.customer_name}</td>
@@ -53,6 +66,38 @@ export default function AdminOrders() {
             ))}
           </tbody>
         </table>
+
+           <div  className="flex justify-between items-center mt-4">
+            <span className="text-sm text-gray-600">
+              Página {currentPage} de {totalPages}
+            </span>
+
+            <div style={{textAlign:'center'}} className="flex gap-2">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(prev => prev - 1)}
+                className={`px-3 py-1 rounded-lg border 
+                  ${currentPage === 1 
+                    ? "bg-gray-200 text-gray-400 cursor-not-allowed" 
+                    : "bg-white hover:bg-gray-100"}`}
+              >
+                Anterior
+              </button>
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage(prev => prev + 1)}
+                className={`px-3 py-1 rounded-lg border 
+                  ${currentPage === totalPages 
+                    ? "bg-gray-200 text-gray-400 cursor-not-allowed" 
+                    : "bg-white hover:bg-gray-100"}`}
+              >
+                Próxima
+              </button>
+            </div>
+          </div>
+
+
       </div>
 
       {/* MODAL */}

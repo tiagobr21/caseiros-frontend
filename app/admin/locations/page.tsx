@@ -14,6 +14,8 @@ export default function AdminLocations() {
   const [openCreate, setOpenCreate] = useState(false);
   const [openEdit, setOpenEdit] = useState<any>(null);
   const [openDelete, setOpenDelete] = useState<any>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 7; 
 
   const loadLocations = async () => {
     const res = await api.get(`${process.env.NEXT_PUBLIC_URL_BACK}/delivery/zones`);
@@ -25,6 +27,16 @@ export default function AdminLocations() {
   useEffect(() => {
     loadLocations();
   }, []);
+
+   const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+    const currentLocations = locations.slice(
+      indexOfFirstItem,
+      indexOfLastItem
+    );
+
+    const totalPages = Math.ceil(locations.length / itemsPerPage);
 
   return (
     <div className="p-1">
@@ -52,7 +64,7 @@ export default function AdminLocations() {
           </thead>
 
           <tbody>
-            {locations.map((u) => (
+            {currentLocations.map((u) => (
               <tr key={u.id} className="border-b">
                 <td className="py-2">{u.id}</td>
                 <td className="py-2">{u.price}</td>
@@ -76,6 +88,36 @@ export default function AdminLocations() {
             ))}
           </tbody>
         </table>
+
+        <div  className="flex justify-between items-center mt-4">
+            <span className="text-sm text-gray-600">
+              Página {currentPage} de {totalPages}
+            </span>
+
+            <div style={{textAlign:'center'}} className="flex gap-2">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(prev => prev - 1)}
+                className={`px-3 py-1 rounded-lg border 
+                  ${currentPage === 1 
+                    ? "bg-gray-200 text-gray-400 cursor-not-allowed" 
+                    : "bg-white hover:bg-gray-100"}`}
+              >
+                Anterior
+              </button>
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage(prev => prev + 1)}
+                className={`px-3 py-1 rounded-lg border 
+                  ${currentPage === totalPages 
+                    ? "bg-gray-200 text-gray-400 cursor-not-allowed" 
+                    : "bg-white hover:bg-gray-100"}`}
+              >
+                Próxima
+              </button>
+            </div>
+          </div>
       </div>
 
       {/* Modais */}

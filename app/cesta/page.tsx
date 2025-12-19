@@ -81,7 +81,7 @@ export default function MonteSuaCesta() {
             />
 
             {imagemSelecionada && (
-              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm z-50">
+              <div className="fixed inset-0 flex items-center  justify-center z-100">
                   <div className="relative p-4 max-w-[90%] max-h-[90%]">
 
                     <button

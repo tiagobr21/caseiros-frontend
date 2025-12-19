@@ -11,8 +11,12 @@ import { CalculateCart } from "../interfaces/CalculateCart";
 
 export default function CarrinhoPage() {
   const { carrinho, removerItem } = useCarrinho();
+
+  console.log(carrinho);
+  
   const subtotal = carrinho.reduce(
-    (acc, item) => acc + Number(item.price) * (item.quantity ?? 1),
+
+    (acc, item) => acc + Number(item.price * (item.quantity ?? 1)),
     0
   );
 
@@ -43,6 +47,46 @@ export default function CarrinhoPage() {
     setValidation(false)
     return true;
   }
+
+  const gerarMensagemWhatsApp = () => {
+      const itensTexto = carrinho
+        .map(
+          (item) =>
+            `• ${item.name} | Qtd: ${item.quantity || 1} | Unit: R$ ${Number(item.price).toFixed(2)}`
+        )
+        .join("\n");
+
+      const mensagem = `
+    🛒 *NOVO PEDIDO*
+
+    👤 *Cliente:* ${nomeCliente}
+    📞 *Telefone:* ${telefoneCliente}
+
+    📍 *Endereço:* ${enderecoCliente}
+    🏘️ *Bairro:* ${bairroSelecionado}
+
+    📦 *Itens do Pedido:*
+    ${itensTexto}
+
+    🚚 *Frete:* R$ ${Number(frete).toFixed(2)}
+    💰 *Subtotal:* R$ ${Number(subtotal).toFixed(2)}
+    ✅ *Total:* R$ ${Number(totalFinal).toFixed(2)}
+
+      `;
+
+      return encodeURIComponent(mensagem);
+  };
+  
+    const enviarWhatsApp = () => {
+    const telefoneEmpresa = "5592984154356";
+    const mensagem = gerarMensagemWhatsApp();
+
+    window.open(
+      `https://wa.me/${telefoneEmpresa}?text=${mensagem}`,
+      "_blank"
+    );
+  };
+
 
   const fetchDeliveryZones = async () => {
     const response = await api.get(`${process.env.NEXT_PUBLIC_URL_BACK}/delivery/zones`);
@@ -131,7 +175,9 @@ export default function CarrinhoPage() {
 
         await api.post(`${process.env.NEXT_PUBLIC_URL_BACK}/orders`, orderBody);
 
-        alertService.success("Pedido realizado com Sucesso !!!");
+       alertService.success("Pedido realizado com Sucesso !!!");
+       
+       enviarWhatsApp();
 
     }    
      

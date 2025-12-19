@@ -19,7 +19,7 @@ export default function AdminProducts() {
   const [openDelete, setOpenDelete] = useState<any>(null);
   const [imagemSelecionada, setImagemSelecionada] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; 
+  const itemsPerPage = 7; 
     
 
   const loadProducts = async () => {
@@ -55,7 +55,7 @@ export default function AdminProducts() {
     const totalPages = Math.ceil(products.length / itemsPerPage);
 
   return (
-    <div className="p-0">
+    <div className="p-1">
       <h1 className="text-2xl font-bold text-green-800 mb-6">Gerenciar Produtos</h1>
        
           <Alert/>

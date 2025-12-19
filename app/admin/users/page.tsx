@@ -14,6 +14,9 @@ export default function AdminUsers() {
   const [openCreate, setOpenCreate] = useState(false);
   const [openEdit, setOpenEdit] = useState<any>(null);
   const [openDelete, setOpenDelete] = useState<any>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 7; 
+    
 
   const loadUsers = async () => {
     const res = await api.get(`${process.env.NEXT_PUBLIC_URL_BACK}/users`);
@@ -24,8 +27,19 @@ export default function AdminUsers() {
     loadUsers();
   }, []);
 
+   const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+    const currentUsers = users.slice(
+      indexOfFirstItem,
+      indexOfLastItem
+    );
+
+    const totalPages = Math.ceil(users.length / itemsPerPage);
+
+
   return (
-    <div className="p-6">
+    <div className="p-4">
       <h1 className="text-2xl font-bold text-green-800 mb-6">
         Gerenciar Usuários
       </h1>
@@ -51,7 +65,7 @@ export default function AdminUsers() {
           </thead>
 
           <tbody>
-            {users.map((u) => (
+            {currentUsers.map((u) => (
               <tr key={u.id} className="border-b">
                 <td className="py-2">{u.id}</td>
                 <td className="py-2">{u.name}</td>
@@ -76,6 +90,36 @@ export default function AdminUsers() {
             ))}
           </tbody>
         </table>
+
+        <div className="flex justify-between items-center mt-4">
+            <span className="text-sm text-gray-600">
+              Página {currentPage} de {totalPages}
+            </span>
+
+            <div style={{textAlign:'center'}} className="flex gap-2">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(prev => prev - 1)}
+                className={`px-3 py-1 rounded-lg border 
+                  ${currentPage === 1 
+                    ? "bg-gray-200 text-gray-400 cursor-not-allowed" 
+                    : "bg-white hover:bg-gray-100"}`}
+              >
+                Anterior
+              </button>
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage(prev => prev + 1)}
+                className={`px-3 py-1 rounded-lg border 
+                  ${currentPage === totalPages 
+                    ? "bg-gray-200 text-gray-400 cursor-not-allowed" 
+                    : "bg-white hover:bg-gray-100"}`}
+              >
+                Próxima
+              </button>
+            </div>
+          </div>
       </div>
 
       {/* Modais */}
