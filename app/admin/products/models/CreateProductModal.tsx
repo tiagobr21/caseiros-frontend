@@ -80,6 +80,14 @@ export default function CreateProductModal({ onClose, onSuccess }: any) {
           className="w-full mb-4"
         />
 
+        <label className="block text-sm font-semibold">Imagem:</label>
+        <input
+          type="file"
+          className="w-full mb-4"
+          onChange={(e) => setImage(e.target.files?.[0] || null)}
+        />
+
+
         <div className="flex justify-end space-x-3">
           <button onClick={onClose} className="px-4 py-2">Cancelar</button>
 
