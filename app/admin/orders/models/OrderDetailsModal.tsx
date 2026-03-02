@@ -1,8 +1,12 @@
 export default function OrderDetailsModal({ order, onClose }: any) {
+     
+    
     const formatDate = (dateStr: string) => {
-      
+
     const date = new Date(dateStr);
     return date.toLocaleString("pt-BR");
+      
+
   };
 
   return (

@@ -190,7 +190,7 @@ export default function AdminProducts() {
                     <img
                       src={imagemSelecionada}
                       alt="Imagem ampliada"
-                      className="rounded-xl max-h-[85vh] mx-auto shadow-2xl"
+                      className="rounded-xl max-h-[60vh] mx-auto shadow-2xl"
                     />
                   </div>
                 </div>

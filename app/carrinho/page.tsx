@@ -10,7 +10,7 @@ import { DeliverZones } from "../interfaces/DeliverZones";
 import { CalculateCart } from "../interfaces/CalculateCart";
 
 export default function CarrinhoPage() {
-  const { carrinho, removerItem } = useCarrinho();
+  const { carrinho, removerItem, limparCarrinho } = useCarrinho();
 
   console.log(carrinho);
   
@@ -140,6 +140,7 @@ export default function CarrinhoPage() {
       neighborhood: string;
       delivery_price: number;
       subtotal: number,
+      created_at: Date,
       total: number
       items: {
         product_id: number,
@@ -169,6 +170,7 @@ export default function CarrinhoPage() {
             neighborhood: bairroSelecionado,
             subtotal: subtotal,
             total: totalFinal,
+            created_at: new Date(),
             delivery_price: Number(frete),
             items: items
         }
@@ -178,6 +180,7 @@ export default function CarrinhoPage() {
        alertService.success("Pedido realizado com Sucesso !!!");
        
        enviarWhatsApp();
+       limparCarrinho();
 
     }    
      

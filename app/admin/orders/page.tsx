@@ -14,6 +14,7 @@ export default function AdminOrders() {
   const loadOrders = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_URL_BACK}/orders`);
     const data = await res.json();
+    console.log(data);
     setOrders(data);
   };
 
